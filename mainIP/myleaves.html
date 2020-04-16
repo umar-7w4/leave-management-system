@@ -1,0 +1,220 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>My Leaves</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!-- Bootstrap Core CSS -->
+<link rel="stylesheet" href="css3/bootstrap.min.css">
+<!-- Custom CSS -->
+<link rel="stylesheet" href="css3/style.css">
+<link rel="stylesheet" href="css3/morris.css">
+<!-- Graph CSS -->
+<link rel="stylesheet" href="css3/font-awesome.css">
+<!-- jQuery -->
+<script th:src="@{/js/jquery-2.2.0.min.js}"></script>
+<!-- //jQuery -->
+<!-- tables -->
+<link rel="stylesheet" href="css3/table-style.css">
+<link rel="stylesheet" href="css3/basictable.css">
+<script type="text/javascript" th:src="@{/js/jquery.basictable.min.js}"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+
+      $('#table-two-axis').basictable();
+
+    });
+</script>
+<!-- //tables -->
+<link href='//fonts.googleapis.com/css?family=Roboto:700,500,300,100italic,100,400' rel='stylesheet' type='text/css'/>
+<link href='//fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+<!-- lined-icons -->
+<link rel="stylesheet" th:href="@{/css3/icon-font.min.css}" type='text/css' />
+<!-- //lined-icons -->
+<link rel="shortcut icon" th:href="@{/img/favicon.png}">
+</head> 
+<body>
+   <div class="page-container">
+   <!--/content-inner-->
+<div class="left-content">
+	   <div class="mother-grid-inner">
+            <!--header start here-->
+			<div class="header-main">
+					<div class="" style="float:left;">
+								<h2><a th:href="@{/user/home}" >Leave Management System</a></h2>
+					</div>
+					<div class="profile_details w3l" style="float:right;">		
+						<ul>
+							<li class="dropdown profile_details_drop">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+									<div class="profile_img">	
+										<span class="prfil-img"><img th:src="@{/img/profile.jpg}" alt=""> </span> 
+										<div class="user-name">
+											<p sec:authentication="name"></p>
+											<span sec:authentication="principal.authorities"></span>
+										</div>
+										<i class="fa fa-angle-down"></i>
+										<i class="fa fa-angle-up"></i>
+										<div class="clearfix"></div>	
+									</div>	
+								</a>
+								<ul class="dropdown-menu drp-mnu"> 
+									<li> <a href="#"><i class="fa fa-user"></i> Profile</a> </li> 
+									<li> <a th:href="@{/logout}"><i class="fa fa-sign-out"></i> Logout</a> </li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+							
+				     <div class="clearfix"> </div>	
+				</div>
+<!--heder end here-->
+
+	<div class="agile-grids">	
+				<!-- tables -->
+			<div class="alert alert-info" th:if="${(param.successMessage != null)}">
+					<span th:text="${param.successMessage[0]}"></span>
+            </div>		
+			<div class="agile-tables">
+
+				  <h3>My Leaves</h3>
+				  <table id="table-two-axis" class="two-axis">
+					<thead>
+					  <tr>
+                		<th>From Date</th>
+                		<th>To Date</th>
+                		<th>No of Days</th>
+                		<th>Leave Type</th>
+                		<th>Reason</th>
+                		<th>Status</th>
+                      </tr>
+                      <tr>
+                          <td>12/04/2020</td>
+                          <td>15/04/2020</td>
+                          <td>03</td>
+                          <td>Health Issue</td>
+                          <td>Fever</td>
+                          <td>
+                            <span th:if="${!leaveInfo.active && leaveInfo.acceptRejectFlag}" class="label-success" style="color: white;">ACCEPTED</span>
+                          </td>      
+                      </tr>
+                      <tr>
+                        <td>13/04/2020</td>
+                        <td>17/04/2020</td>
+                        <td>04</td>
+                        <td>Health Issue</td>
+                        <td>cold and fever</td>
+                        <td>
+                            <span th:if="${!leaveInfo.active && leaveInfo.acceptRejectFlag}" class="label-success" style="color: white;">ACCEPTED</span>
+                          </td>
+                      </tr>
+                      <tr>
+                        <td>15/04/2020</td>
+                        <td>20/04/2020</td>
+                        <td>05</td>
+                        <td>Occation</td>
+                        <td>Marriage</td>
+                        <td>
+                            <span th:if="${!leaveInfo.active && !leaveInfo.acceptRejectFlag}" class="label-danger" style="color: white;">REJECTED</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>16/04/2020</td>
+                        <td>22/04/2020</td>
+                        <td>06</td>
+                        <td>Health Issue</td>
+                        <td>Pnemonia</td>
+                        <td>
+                            <span th:if="${!leaveInfo.active && leaveInfo.acceptRejectFlag}" class="label-success" style="color: white;">ACCEPTED</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>18/04/2020</td>
+                        <td>22/04/2020</td>
+                        <td>04</td>
+                        <td>Health Issue</td>
+                        <td>Fever</td>
+                        <td>
+                            <span th:if="${leaveInfo.active}" class="label-primary" style="color: white;">PENDING</span>
+                        </td>
+                      </tr>
+					</thead>
+				  </table>
+
+			</div>
+			<!-- //table -->
+	</div>
+<!-- script-for sticky-nav -->
+		<script>
+		$(document).ready(function() {
+			 var navoffeset=$(".header-main").offset().top;
+			 $(window).scroll(function(){
+				var scrollpos=$(window).scrollTop(); 
+				if(scrollpos >=navoffeset){
+					$(".header-main").addClass("fixed");
+				}else{
+					$(".header-main").removeClass("fixed");
+				}
+			 });
+			 
+		});
+		</script>
+		<!-- /script-for sticky-nav -->
+<!--inner block start here-->
+
+<!--inner block end here-->
+
+</div>
+</div>
+  <!--//content-inner-->
+		<!--/sidebar-menu-->
+				<div class="sidebar-menu">
+					
+						<div style="border-top:1px ridge rgba(255, 255, 255, 0.15)"></div>
+                           <div class="menu">
+									<ul id="menu" >
+                                        <li><a href="http://127.0.0.1:5500/leave.html">Home</a></li>
+										
+										<li><a href="http://127.0.0.1:5500/leavestatus.html">Leave Status</a></li>
+                                        
+                                        <li><a href="http://127.0.0.1:5500/leave.html">Apply Leave</a></li>
+										
+                                        <li><a href="http://127.0.0.1:5500/myleaves.html">My Leaves</a></li>
+                                        
+										<li><a href="http://127.0.0.1:5500/index.html">Logout</a></li>
+								  	</ul>
+							</div>
+				</div>
+				<div class="clearfix"></div>		
+</div>
+<script>
+var toggle = true;
+			
+$(".sidebar-icon").click(function() {                
+  if (toggle)
+  {
+	$(".page-container").addClass("sidebar-collapsed").removeClass("sidebar-collapsed-back");
+	$("#menu span").css({"position":"absolute"});
+  }
+  else
+  {
+	$(".page-container").removeClass("sidebar-collapsed").addClass("sidebar-collapsed-back");
+	setTimeout(function() {
+	  $("#menu span").css({"position":"relative"});
+	}, 400);
+  }
+				
+				toggle = !toggle;
+			});
+</script>
+<!--js -->
+<script th:src="@{/js/jquery.nicescroll.js}"></script>
+<script th:src="@{/js/scripts.js}"></script>
+<!-- Bootstrap Core JavaScript -->
+   <script th:src="@{/js/bootstrap.min.js}"></script>
+   <!-- /Bootstrap Core JavaScript -->	   
+
+</body>
+</html>
